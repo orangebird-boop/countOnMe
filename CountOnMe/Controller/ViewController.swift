@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+// okergoer
 class ViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet var numberButtons: [UIButton]!
@@ -105,7 +105,7 @@ class ViewController: UIViewController {
             operationsToReduce = Array(operationsToReduce.dropFirst(3))
             operationsToReduce.insert("\(result)", at: 0)
         }
-        
+
         textView.text.append(" = \(operationsToReduce.first!)")
     }
 
