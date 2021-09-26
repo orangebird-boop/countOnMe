@@ -30,7 +30,7 @@ class CalculatorBrain {
         return elements.last != "+" && elements.last != "-" && elements.last != "/" && elements.last != "*"
     }
 
-    func executeCalculus()-> Result<String, CalculatorBrainError>{
+    func executeCalculus()-> Result<String, CalculatorBrainError> {
         guard expressionIsCorrect else {
             return .failure(.invalidExpression)
 
@@ -38,6 +38,7 @@ class CalculatorBrain {
 
         guard expressionHaveEnoughElement else {
             return .failure(.notEnoughElementInExpression)
+
         }
 
         // Create local copy of operations

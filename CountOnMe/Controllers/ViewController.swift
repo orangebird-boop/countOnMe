@@ -31,7 +31,6 @@ class ViewController: UIViewController {
         viewModel.delegate = self
     }
 
-
     // View actions
     @IBAction func tappedNumberButton(_ sender: UIButton) {
         guard let numberText = sender.title(for: .normal) else {
@@ -70,7 +69,7 @@ class ViewController: UIViewController {
 
     @IBAction func tappedDivisionButton(_ sender: UIButton) {
     }
-    
+
     @IBAction func tappedEqualButton(_ sender: UIButton) {
         guard viewModel.calculatorBrain.expressionIsCorrect else {
             let alertVC = UIAlertController(title: "Zéro!", message: "Entrez une expression correcte !", preferredStyle: .alert)
@@ -112,8 +111,7 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: CalculatorViewModelDelegate {
-   
+    func calculusHasCompleted(result: String) {
+        print(result)
     }
-
-
-
+    }

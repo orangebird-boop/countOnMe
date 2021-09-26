@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol CalculatorViewModelDelegate: AnyObject{
+protocol CalculatorViewModelDelegate: AnyObject {
     func calculusHasCompleted(result: String)
 }
 
@@ -18,9 +18,9 @@ struct CalculatorViewModel {
 
     func executeCalculus() {
         let calculusResult = calculatorBrain.executeCalculus()
-//i have no idea if this is good or not
+// i have no idea if this is good or not
         delegate?.calculusHasCompleted(result: "result")
-        switch calculusResult{
+        switch calculusResult {
         case .success(let result):
             print(" \(result)")
 
@@ -35,6 +35,5 @@ struct CalculatorViewModel {
             }
         }
 
-        
     }
 }
