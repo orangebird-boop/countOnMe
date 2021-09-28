@@ -21,7 +21,7 @@ struct CalculatorViewModel {
 // i have no idea if this is good or not
         print("view model line 22")
         delegate?.calculusHasCompleted(result: "calculusResult")
-print("calculus has completed")
+        print("calculus has completed")
         print(calculusResult)
         switch calculusResult {
         case .success(let result):
