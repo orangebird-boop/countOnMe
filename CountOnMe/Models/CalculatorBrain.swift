@@ -19,7 +19,7 @@ class CalculatorBrain {
     var elements: [String] = []
 
     var expressionIsCorrect: Bool {
-        return elements.last != "+" && elements.last != "-"
+        return elements.last != "+" && elements.last != "-" && elements.last != "÷" && elements.last != "x"
     }
 
     var expressionHaveEnoughElement: Bool {
@@ -27,15 +27,16 @@ class CalculatorBrain {
     }
 
     var canAddOperator: Bool {
-        return elements.last != "+" && elements.last != "-" && elements.last != "/" && elements.last != "*"
+        return elements.last != "+" && elements.last != "-" && elements.last != "÷" && elements.last != "x"
     }
 
     func executeCalculus()-> Result<String, CalculatorBrainError> {
+        print("execute calculus34")
         guard expressionIsCorrect else {
             return .failure(.invalidExpression)
 
         }
-
+        print("expression has enough elements")
         guard expressionHaveEnoughElement else {
             return .failure(.notEnoughElementInExpression)
 
@@ -54,15 +55,15 @@ class CalculatorBrain {
             switch operand {
             case "+": result = left + right
             case "-": result = left - right
-            case "*": result = left * right
-            case "/": result = left / right
+            case "x": result = left * right
+            case "÷": result = left / right
             default: fatalError("Unknown operator !")
             }
 
             operationsToReduce = Array(operationsToReduce.dropFirst(3))
             operationsToReduce.insert("\(result)", at: 0)
         }
-        return .success(operationsToReduce.first!)
+      return .success(operationsToReduce.first!)
 
     }
 }

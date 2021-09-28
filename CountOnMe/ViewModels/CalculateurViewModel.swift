@@ -19,10 +19,14 @@ struct CalculatorViewModel {
     func executeCalculus() {
         let calculusResult = calculatorBrain.executeCalculus()
 // i have no idea if this is good or not
-        delegate?.calculusHasCompleted(result: "result")
+        print("view model line 22")
+        delegate?.calculusHasCompleted(result: "calculusResult")
+print("calculus has completed")
+        print(calculusResult)
         switch calculusResult {
         case .success(let result):
             print(" \(result)")
+            print("result CVM 28")
 
         case .failure(let errorMessage):
             print("\(errorMessage)")
