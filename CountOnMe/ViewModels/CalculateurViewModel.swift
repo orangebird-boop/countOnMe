@@ -10,32 +10,37 @@ import Foundation
 
 protocol CalculatorViewModelDelegate: AnyObject {
     func calculusHasCompleted(result: String)
+    func calculusFailed(errorMessage: String)
 }
 
 struct CalculatorViewModel {
     weak var delegate: CalculatorViewModelDelegate?
-    let calculatorBrain = CalculatorBrain()
+    private let calculatorBrain = CalculatorBrain()
 
+    var canAddOperator: Bool {
+        return calculatorBrain.elements.last != "+" && calculatorBrain.elements.last != "-" && calculatorBrain.elements.last != "÷" && calculatorBrain.elements.last != "x"
+    }
+
+    func setCalculusElements(elements: [String]) {
+        calculatorBrain.elements = elements
+    }
+    
     func executeCalculus() {
         let calculusResult = calculatorBrain.executeCalculus()
 // i have no idea if this is good or not
-        print("view model line 22")
-        delegate?.calculusHasCompleted(result: "calculusResult")
-        print("calculus has completed")
-        print(calculusResult)
+       
         switch calculusResult {
         case .success(let result):
-            print(" \(result)")
-            print("result CVM 28")
+            delegate?.calculusHasCompleted(result: result)
 
         case .failure(let errorMessage):
             print("\(errorMessage)")
             switch errorMessage {
             case .invalidExpression:
-                print("invalid expression")
+                delegate?.calculusFailed(errorMessage: "invalide expression")
 
             case .notEnoughElementInExpression:
-                print("not enough elements in the expression")
+                delegate?.calculusFailed(errorMessage: "not enough elements")
             }
         }
 

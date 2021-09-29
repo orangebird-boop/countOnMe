@@ -45,7 +45,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func tappedAdditionButton(_ sender: UIButton) {
-        if viewModel.calculatorBrain.canAddOperator {
+        if viewModel.canAddOperator {
             textView.text.append(" + ")
         } else {
             let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
@@ -55,7 +55,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func tappedSubstractionButton(_ sender: UIButton) {
-        if viewModel.calculatorBrain.canAddOperator {
+        if viewModel.canAddOperator {
             textView.text.append(" - ")
         } else {
             let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
@@ -65,7 +65,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func tappedMultiplicationButton(_ sender: UIButton) {
-        if viewModel.calculatorBrain.canAddOperator {
+        if viewModel.canAddOperator {
             textView.text.append(" * ")
 
         } else {
@@ -76,7 +76,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func tappedDivisionButton(_ sender: UIButton) {
-            if viewModel.calculatorBrain.canAddOperator {
+            if viewModel.canAddOperator {
                 textView.text.append(" ÷ ")
             } else {
                 let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
@@ -86,35 +86,21 @@ class ViewController: UIViewController {
         }
 
     @IBAction func tappedEqualButton(_ sender: UIButton) {
-        print("equal pressed")
-        viewModel.calculatorBrain.elements = elements
-        print(viewModel.calculatorBrain.expressionIsCorrect)
-        guard viewModel.calculatorBrain.expressionIsCorrect else {
-            let alertVC = UIAlertController(title: "Zéro!", message: "Entrez une expression correcte !", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            return self.present(alertVC, animated: true, completion: nil)
-        }
-
-        guard viewModel.calculatorBrain.expressionHaveEnoughElement else {
-            let alertVC = UIAlertController(title: "Zéro!", message: "Démarrez un nouveau calcul !", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            return self.present(alertVC, animated: true, completion: nil)
-        }
-        let x123 = viewModel.calculatorBrain.executeCalculus()
-        switch x123 {
-        case .success(let answer):
-            textView.text.append(" = \(answer)")
-            print("The answer is \(answer)")
-        case .failure(let error):
-            textView.text.append("Err")
-            print("The error is \(error)")
-        print("String", x123)
-        }
+        viewModel.setCalculusElements(elements: elements)
+        viewModel.executeCalculus()
 
     }
 }
 
 extension ViewController: CalculatorViewModelDelegate {
+    func calculusFailed(errorMessage: String) {
+        let alertVC = UIAlertController(title: "Zéro!", message: "Entrez une expression correcte !", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alertVC, animated: true, completion: nil)
+
+    }
+
     func calculusHasCompleted(result: String) {
+        textView.text.append(" = \(result)")
     }
     }

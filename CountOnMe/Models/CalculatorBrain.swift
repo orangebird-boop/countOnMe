@@ -26,9 +26,7 @@ class CalculatorBrain {
         return elements.count >= 3
     }
 
-    var canAddOperator: Bool {
-        return elements.last != "+" && elements.last != "-" && elements.last != "÷" && elements.last != "x"
-    }
+   
 /*
     // Addition and substarction
     func performAdditionAndSubstraction(operationsToReduce: [String]) -> [String]? {
