@@ -92,7 +92,7 @@
                                 <rect key="frame" x="20" y="64" width="374" height="658"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="1+1=2" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="T2H-yn-nBB">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="436"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="384"/>
                                         <color key="backgroundColor" red="0.24527746819999999" green="0.53481305040000005" blue="0.58749136739999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="60"/>
@@ -245,17 +245,28 @@
                                     <constraint firstItem="isI-Gg-Iye" firstAttribute="leading" secondItem="8sd-Zd-xO2" secondAttribute="leading" id="glL-Bt-GJf"/>
                                     <constraint firstAttribute="bottomMargin" secondItem="isI-Gg-Iye" secondAttribute="bottom" id="gvy-c3-iJe"/>
                                     <constraint firstItem="T2H-yn-nBB" firstAttribute="top" secondItem="8sd-Zd-xO2" secondAttribute="top" id="iMS-Gs-MQa"/>
-                                    <constraint firstItem="isI-Gg-Iye" firstAttribute="top" secondItem="T2H-yn-nBB" secondAttribute="bottom" constant="8" symbolic="YES" id="j5l-65-zcP"/>
                                     <constraint firstAttribute="trailing" secondItem="isI-Gg-Iye" secondAttribute="trailing" id="m8Q-eX-5wx"/>
                                     <constraint firstAttribute="trailing" secondItem="T2H-yn-nBB" secondAttribute="trailing" id="xyY-ff-57z"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KGu-fT-m1Q">
+                                <rect key="frame" x="20" y="456" width="374" height="44"/>
+                                <color key="backgroundColor" red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="0.60533940397350994" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <state key="normal" title="Clear All">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="clearAllButton:" destination="eqK-jh-KKu" eventType="touchUpInside" id="2FY-mV-Boj"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="AWJ-Vl-uau"/>
                         <color key="backgroundColor" red="0.87536688539999996" green="0.84808511389999996" blue="0.83804947389999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ogr-Aw-e1h" firstAttribute="centerX" secondItem="eIh-hr-C95" secondAttribute="centerX" id="12q-gT-aeD"/>
                             <constraint firstItem="8sd-Zd-xO2" firstAttribute="leading" secondItem="AWJ-Vl-uau" secondAttribute="leading" constant="20" id="7GP-qI-xok"/>
+                            <constraint firstItem="KGu-fT-m1Q" firstAttribute="top" secondItem="T2H-yn-nBB" secondAttribute="bottom" constant="8" symbolic="YES" id="91j-lI-wfx"/>
                             <constraint firstItem="AWJ-Vl-uau" firstAttribute="bottom" secondItem="ogr-Aw-e1h" secondAttribute="bottom" constant="10" id="9MC-DM-t1w"/>
                             <constraint firstItem="ogr-Aw-e1h" firstAttribute="top" secondItem="8sd-Zd-xO2" secondAttribute="bottom" constant="20" id="AWh-mT-ERt"/>
                             <constraint firstItem="8sd-Zd-xO2" firstAttribute="top" secondItem="AWJ-Vl-uau" secondAttribute="top" constant="20" id="EUY-KU-bdh"/>
@@ -263,7 +274,10 @@
                             <constraint firstItem="ogr-Aw-e1h" firstAttribute="leading" secondItem="8sd-Zd-xO2" secondAttribute="leading" id="KNg-Xo-IxH"/>
                             <constraint firstItem="8sd-Zd-xO2" firstAttribute="centerX" secondItem="eIh-hr-C95" secondAttribute="centerX" id="KqU-pC-9T5"/>
                             <constraint firstItem="AWJ-Vl-uau" firstAttribute="trailing" secondItem="8sd-Zd-xO2" secondAttribute="trailing" constant="20" id="OGC-ey-fwW"/>
+                            <constraint firstItem="KGu-fT-m1Q" firstAttribute="leading" secondItem="eIh-hr-C95" secondAttribute="leading" constant="20" id="QVK-fe-osk"/>
+                            <constraint firstAttribute="trailing" secondItem="KGu-fT-m1Q" secondAttribute="trailing" constant="20" id="ZCP-3f-LrM"/>
                             <constraint firstItem="8sd-Zd-xO2" firstAttribute="leading" secondItem="AWJ-Vl-uau" secondAttribute="leading" constant="20" id="rPc-xc-E77"/>
+                            <constraint firstItem="isI-Gg-Iye" firstAttribute="top" secondItem="KGu-fT-m1Q" secondAttribute="bottom" constant="8" symbolic="YES" id="vTJ-g2-0ya"/>
                         </constraints>
                     </view>
                     <connections>

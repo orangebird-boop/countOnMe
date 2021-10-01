@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import SimpleCalc
+@testable import CountOnMe
 
 class SimpleCalcTests: XCTestCase {
 
@@ -20,8 +20,15 @@ class SimpleCalcTests: XCTestCase {
     }
 
     func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+       let calculatorBrain = CalculatorBrain()
+        calculatorBrain.elements = ["1", "+", "1"]
+        let result = calculatorBrain.executeCalculus()
+        switch result {
+        case .success(let sum):
+            XCTAssertEqual(sum, "2")
+        case .failure(_):
+            XCTFail("should return 2")
+        }
     }
 
     func testPerformanceExample() {

@@ -24,11 +24,10 @@ struct CalculatorViewModel {
     func setCalculusElements(elements: [String]) {
         calculatorBrain.elements = elements
     }
-    
+
     func executeCalculus() {
         let calculusResult = calculatorBrain.executeCalculus()
-// i have no idea if this is good or not
-       
+
         switch calculusResult {
         case .success(let result):
             delegate?.calculusHasCompleted(result: result)
@@ -44,5 +43,10 @@ struct CalculatorViewModel {
             }
         }
 
+    }
+
+    func clearAll() {
+        calculatorBrain.elements.removeAll()
+        
     }
 }

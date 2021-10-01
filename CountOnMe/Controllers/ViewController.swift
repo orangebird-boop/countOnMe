@@ -32,6 +32,11 @@ class ViewController: UIViewController {
     }
 
     // View actions
+    @IBAction func clearAllButton(_ sender: UIButton) {
+        viewModel.clearAll()
+        textView.text.removeAll()
+        textView.text.append("")
+    }
     @IBAction func tappedNumberButton(_ sender: UIButton) {
         guard let numberText = sender.title(for: .normal) else {
             return
