@@ -10,13 +10,15 @@ import Foundation
 
 class CalculatorBrain {
 
-    enum CalculatorBrainError: Error {
+    enum CalculatorBrainError: Error, Equatable {
         case invalidExpression
+        case divideByZero
         case notEnoughElementInExpression
+
 
     }
 
-    var elements: [String] = []
+    var elements: [String?] = []
 
     var expressionIsCorrect: Bool {
         return elements.last != "+" && elements.last != "-" && elements.last != "÷" && elements.last != "*"
@@ -26,35 +28,58 @@ class CalculatorBrain {
         return elements.count >= 3
     }
 
-    func processPriorities() -> [String]{
+    var expressionNotDividedByZero: Bool {
+        for element in elements {
+            if element == "÷" {
+                if elements[elements.index(after: 1)] == "0" {
+                    return false
+                }
+            }
+        }
+        return true
+
+    }
+
+    func processPriorities()-> [String] {
         var processing: [String] = []
-      //  var leftOperand: Float = 0
-      //  var rightOperand: Float = 0
-
-
 
         var index = 0
 
         while index < elements.count {
             let element = elements[index]
             if element == "*" || element == "÷" {
+                // find a way to saftly unwrapp it!!!!
                 let leftOperand = Float(processing.popLast()!)
-                let rightOperand = Float(elements[index+1])!
+                // let rightOperand = Float(elements[index+1])!
 
-                switch element {
-                case "*": processing.append(String(leftOperand! * rightOperand))
-                case "÷": processing.append(String(leftOperand! / rightOperand))
-                default: fatalError("Unknown operator !")
+                var rightOperand: Float = 1
+                if (elements[index+1]) != nil {
+                    if (elements[index+1]) == nil {
+                        CalculatorBrainError.invalidExpression
+                    }
+                    if let unwrappedFLoat = Float(elements[index+1]!) {
+                        rightOperand = unwrappedFLoat
+                        if element == "÷" && rightOperand == 0 {
+                            CalculatorBrainError.invalidExpression
+                        }
+                    }
+                }
+                    switch element {
+                    case "*": processing.append(String(leftOperand! * rightOperand))
+                    case "÷": processing.append(String(leftOperand! / rightOperand))
+                    default: fatalError("Unknown operator !")
                 }
                 index += 1
             } else {
-                processing.append(element)
+                processing.append(element!)
             }
             index += 1
         }
 
         return processing
     }
+
+
 
     func executeCalculus()-> Result<String, CalculatorBrainError> {
 
@@ -63,10 +88,16 @@ class CalculatorBrain {
 
         }
 
+        guard expressionNotDividedByZero else {
+            return .failure(.divideByZero)
+        }
+        
         guard expressionHaveEnoughElement else {
             return .failure(.notEnoughElementInExpression)
 
         }
+
+
 
         // Create local copy of operations
      //   var operationsToReduce = elements
@@ -93,3 +124,4 @@ class CalculatorBrain {
 
     }
 }
+

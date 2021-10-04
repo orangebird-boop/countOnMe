@@ -40,6 +40,9 @@ struct CalculatorViewModel {
 
             case .notEnoughElementInExpression:
                 delegate?.calculusFailed(errorMessage: "not enough elements")
+
+            case.divideByZero:
+                delegate?.calculusFailed(errorMessage: "you can't divide by zero")
             }
         }
 
@@ -47,6 +50,5 @@ struct CalculatorViewModel {
 
     func clearAll() {
         calculatorBrain.elements.removeAll()
-        
     }
 }
