@@ -7,27 +7,85 @@
 //
 
 import XCTest
+@testable import CountOnMe
 
 class CountOnMeViewModelsTests: XCTestCase {
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+
+    }
+    var viewModel = CalculatorViewModel()
+    let observer = CalculatorViewModelObserver()
+
+    func testCanAddOperator() {
+        viewModel.delegate = observer
+        viewModel.setCalculusElements(elements: ["1", "+", "1"])
+
+        XCTAssertTrue(viewModel.canAddOperator)
+
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testExecuteCalculusWhenCalculusHasCompleted() {
+        viewModel.delegate = observer
+
+        viewModel.setCalculusElements(elements: ["1", "+", "1"])
+        viewModel.executeCalculus()
+
+        XCTAssertTrue(observer.calculusHasCompleted)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testExecuteCalculusWhenCalculusHasFailed() {
+        viewModel.delegate = observer
+        viewModel.setCalculusElements(elements: ["1", "+"])
+        viewModel.executeCalculus()
+
+        XCTAssertTrue(observer.calculusHasFailed)
     }
 
+    func testShouldReturnNotEnoughElements(errorMessage: String) {
+        viewModel.delegate = observer
+        viewModel.setCalculusElements(elements: ["1", "+"])
+
+        XCTAssertEqual(observer.calculusHasFailed, true, "not enough elements")
+    }
+
+    func testShouldReturnIvalidExpression(errorMessage: String) {
+        viewModel.delegate = observer
+        viewModel.setCalculusElements(elements: ["1", "+", "-"])
+
+        XCTAssertEqual(observer.calculusHasFailed, true, "invalide expression")
+    }
+
+    func testShouldReturnDivisionByZero(errorMessage: String) {
+        viewModel.delegate = observer
+        viewModel.setCalculusElements(elements: ["1", "≠", "0"])
+
+        XCTAssertEqual(observer.calculusHasFailed, true, "you can't divide by zero")
+    }
+
+    func testIfClearAllIsClearsTheListOfElements() {
+        viewModel.delegate = observer
+
+        viewModel.setCalculusElements(elements: ["1", "+", "1"])
+        viewModel.clearAll()
+    }
+
+}
+
+class CalculatorViewModelObserver: CalculatorViewModelDelegate {
+    var calculusHasCompleted = false
+    var calculusHasFailed = false
+
+    func calculusHasCompleted(result: String) {
+        calculusHasCompleted = true
+    }
+
+    func calculusFailed(errorMessage: String) {
+        calculusHasFailed = true
+
+    }
 }

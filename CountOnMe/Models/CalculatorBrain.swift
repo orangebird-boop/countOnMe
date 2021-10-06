@@ -9,65 +9,55 @@
 import Foundation
 
 class CalculatorBrain {
-
+    
     enum CalculatorBrainError: Error, Equatable {
         case invalidExpression
         case divideByZero
         case notEnoughElementInExpression
-
-
     }
-
+    
     var elements: [String?] = []
-
+    
     var expressionIsCorrect: Bool {
         return elements.last != "+" && elements.last != "-" && elements.last != "÷" && elements.last != "*"
     }
-
+    
     var expressionHaveEnoughElement: Bool {
         return elements.count >= 3
     }
-
+    
     var expressionNotDividedByZero: Bool {
-        for element in elements {
-            if element == "÷" {
-                if elements[elements.index(after: 1)] == "0" {
-                    return false
-                }
+        for element in elements where element == "÷" {
+            if elements[elements.index(after: 1)] == "0" {
+                return false
             }
         }
         return true
-
     }
-
-    func processPriorities()-> [String] {
+    
+    func processPriorities() -> Result<[String], CalculatorBrainError> {
         var processing: [String] = []
-
         var index = 0
-
+        
         while index < elements.count {
             let element = elements[index]
             if element == "*" || element == "÷" {
-                // find a way to saftly unwrapp it!!!!
-                let leftOperand = Float(processing.popLast()!)
-                // let rightOperand = Float(elements[index+1])!
-
-                var rightOperand: Float = 1
-                if (elements[index+1]) != nil {
-                    if (elements[index+1]) == nil {
-                        CalculatorBrainError.invalidExpression
-                    }
-                    if let unwrappedFLoat = Float(elements[index+1]!) {
-                        rightOperand = unwrappedFLoat
-                        if element == "÷" && rightOperand == 0 {
-                            CalculatorBrainError.invalidExpression
-                        }
-                    }
+                
+                guard let lastProcessedElement = processing.popLast(), let leftOperand = Float(lastProcessedElement) else {
+                    return .failure(.invalidExpression)
                 }
-                    switch element {
-                    case "*": processing.append(String(leftOperand! * rightOperand))
-                    case "÷": processing.append(String(leftOperand! / rightOperand))
-                    default: fatalError("Unknown operator !")
+                
+                guard let rightElement = elements[index+1], let rightOperand = Float(rightElement) else {
+                    return .failure(.invalidExpression)
+                }
+                guard element == "÷" && rightOperand != 0 else {
+                    return .failure(.divideByZero)
+                }
+                
+                switch element {
+                case "*": processing.append(String(leftOperand * rightOperand))
+                case "÷": processing.append(String(leftOperand / rightOperand))
+                default: fatalError("Unknown operator !")
                 }
                 index += 1
             } else {
@@ -75,53 +65,53 @@ class CalculatorBrain {
             }
             index += 1
         }
-
-        return processing
+        
+        return .success(processing)
     }
-
-
-
+    
     func executeCalculus()-> Result<String, CalculatorBrainError> {
-
+        
         guard expressionIsCorrect else {
             return .failure(.invalidExpression)
-
+            
         }
-
+        
         guard expressionNotDividedByZero else {
             return .failure(.divideByZero)
         }
         
         guard expressionHaveEnoughElement else {
             return .failure(.notEnoughElementInExpression)
-
+            
         }
-
-
-
+        
         // Create local copy of operations
-     //   var operationsToReduce = elements
         // the process priorities functions returns an array to reduce
-        var operationsToReduce = processPriorities()
-        while operationsToReduce.count > 1 {
-            let left = Float(operationsToReduce[0])!
-            let operand = operationsToReduce[1]
-            let right = Float(operationsToReduce[2])!
-
+        
+        var operations = [String]()
+        switch processPriorities() {
+        case .success(let operationResult):
+            operations = operationResult
+        case .failure(let error):
+            return .failure(error)
+        }
+        while operations.count > 1 {
+            let left = Float(operations[0])!
+            let operand = operations[1]
+            let right = Float(operations[2])!
+            
             let result: Float
             switch operand {
             case "+": result = left + right
             case "-": result = left - right
-     //       case "x": result = left * right
-     //       case "÷": result = left / right
+                
             default: fatalError("Unknown operator !")
             }
-
-            operationsToReduce = Array(operationsToReduce.dropFirst(3))
-            operationsToReduce.insert("\(result)", at: 0)
+            
+            operations = Array(operations.dropFirst(3))
+            operations.insert("\(result)", at: 0)
         }
-      return .success(operationsToReduce.first!)
-
+        return .success(operations.first!)
+        
     }
 }
-
