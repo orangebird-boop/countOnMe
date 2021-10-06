@@ -68,7 +68,7 @@ class SimpleCalcTests: XCTestCase {
         }
     }
 
-    func testCalculWithAllOperands() {
+    func testCalculationWithPriorities() {
         calculatorBrain.elements = ["8", "-", "6", "÷", "2", "+", "4", "*", "2"]
         let result = calculatorBrain.executeCalculus()
         switch result {

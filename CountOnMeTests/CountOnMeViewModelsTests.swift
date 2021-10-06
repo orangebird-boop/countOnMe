@@ -18,6 +18,7 @@ class CountOnMeViewModelsTests: XCTestCase {
     override func tearDownWithError() throws {
 
     }
+
     var viewModel = CalculatorViewModel()
     let observer = CalculatorViewModelObserver()
 
@@ -56,14 +57,16 @@ class CountOnMeViewModelsTests: XCTestCase {
     func testShouldReturnIvalidExpression(errorMessage: String) {
         viewModel.delegate = observer
         viewModel.setCalculusElements(elements: ["1", "+", "-"])
-
-        XCTAssertEqual(observer.calculusHasFailed, true, "invalide expression")
+        viewModel.executeCalculus()
+        let errorMessage = "invalide expression"
+        XCTAssertEqual(errorMessage, "invalide expression")
+    //    XCTAssertEqual(observer.calculusHasFailed, true, "invalide expression")
     }
 
     func testShouldReturnDivisionByZero(errorMessage: String) {
         viewModel.delegate = observer
         viewModel.setCalculusElements(elements: ["1", "≠", "0"])
-
+        viewModel.executeCalculus()
         XCTAssertEqual(observer.calculusHasFailed, true, "you can't divide by zero")
     }
 
