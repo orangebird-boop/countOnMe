@@ -45,7 +45,7 @@ class SimpleCalcTests: XCTestCase {
             XCTFail("should return 1.0")
         }
     }
-// this test needs to be reviewed!!!
+
     func testSimpleMultiplication() {
         calculatorBrain.elements = ["2", "*", "2"]
         let result = calculatorBrain.executeCalculus()
@@ -101,6 +101,28 @@ class SimpleCalcTests: XCTestCase {
         }
     }
 
+    func testShouldReturnInvalideExpressionWhenMultiplicationOrAdditionInCaseOfUnknownLeftOperand() {
+        calculatorBrain.elements = ["a", "*", "2"]
+        let result = calculatorBrain.executeCalculus()
+        switch result {
+        case .success(_):
+            XCTFail("should return 13.5")
+        case .failure(let error):
+            XCTAssertEqual(error, .invalidExpression)
+        }
+    }
+
+    func testShouldReturnInvalideExpressionWhenMultiplicationOrAdditionInCaseOfUnknownRightOperand() {
+        calculatorBrain.elements = ["3", "*", "a"]
+        let result = calculatorBrain.executeCalculus()
+        switch result {
+        case .success(_):
+            XCTFail("should return 13.5")
+        case .failure(let error):
+            XCTAssertEqual(error, .invalidExpression)
+        }
+    }
+
     func testShouldReturnNotEnoughElements() {
         calculatorBrain.elements = ["8"]
         let result = calculatorBrain.executeCalculus()
@@ -120,6 +142,18 @@ class SimpleCalcTests: XCTestCase {
             XCTFail("should return 13.5")
         case .failure(let error):
             XCTAssertEqual(error, .divideByZero)
+        }
+    }
+
+// Does this function need to be tested?
+    func testShouldReturnFatalErrorWhileMultiplicationOrDivisionWhenOperatorIsUnknown() {
+        calculatorBrain.elements = ["8", "a", "0"]
+        let result = calculatorBrain.executeCalculus()
+        switch result {
+        case .success(_):
+            XCTFail("should return 13.5")
+        case .failure(let error):
+            break
         }
     }
 }

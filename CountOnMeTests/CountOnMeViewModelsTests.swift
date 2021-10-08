@@ -47,25 +47,23 @@ class CountOnMeViewModelsTests: XCTestCase {
         XCTAssertTrue(observer.calculusHasFailed)
     }
 
-    func testShouldReturnNotEnoughElements(errorMessage: String) {
+    func testShouldReturnNotEnoughElements() {
         viewModel.delegate = observer
-        viewModel.setCalculusElements(elements: ["1", "+"])
-
+        viewModel.setCalculusElements(elements: ["1"])
+        viewModel.executeCalculus()
         XCTAssertEqual(observer.calculusHasFailed, true, "not enough elements")
     }
 
-    func testShouldReturnIvalidExpression(errorMessage: String) {
+    func testShouldReturnIvalidExpression() {
         viewModel.delegate = observer
         viewModel.setCalculusElements(elements: ["1", "+", "-"])
         viewModel.executeCalculus()
-        let errorMessage = "invalide expression"
-        XCTAssertEqual(errorMessage, "invalide expression")
-    //    XCTAssertEqual(observer.calculusHasFailed, true, "invalide expression")
+        XCTAssertEqual(observer.calculusHasFailed, true, "invalid expression")
     }
 
-    func testShouldReturnDivisionByZero(errorMessage: String) {
+    func testShouldReturnDivisionByZero() {
         viewModel.delegate = observer
-        viewModel.setCalculusElements(elements: ["1", "≠", "0"])
+        viewModel.setCalculusElements(elements: ["1", "÷", "0"])
         viewModel.executeCalculus()
         XCTAssertEqual(observer.calculusHasFailed, true, "you can't divide by zero")
     }
@@ -75,6 +73,9 @@ class CountOnMeViewModelsTests: XCTestCase {
 
         viewModel.setCalculusElements(elements: ["1", "+", "1"])
         viewModel.clearAll()
+        viewModel.executeCalculus()
+        XCTAssertEqual(observer.calculusHasFailed, true, "not enough elements")
+
     }
 
 }

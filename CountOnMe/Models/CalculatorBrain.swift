@@ -35,6 +35,7 @@ class CalculatorBrain {
         return true
     }
 
+    // multiplication and division are prioritary in the calculation, they need to be executed before addition ad substraction.
     func processPriorities() -> Result<[String], CalculatorBrainError> {
         var processing: [String] = []
         var index = 0
@@ -50,6 +51,7 @@ class CalculatorBrain {
                 guard let rightElement = elements[index+1], let rightOperand = Float(rightElement) else {
                     return .failure(.invalidExpression)
                 }
+                // it is not possible to divide by zero
                 guard element == "÷" && rightOperand != 0 else {
                     return .failure(.divideByZero)
                 }

@@ -47,7 +47,7 @@ struct CalculatorViewModel {
         }
 
     }
-    
+// clear all elements form variable elements in CalculatorBrain
     func clearAll() {
         calculatorBrain.elements.removeAll()
     }
