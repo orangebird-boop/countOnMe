@@ -7,8 +7,8 @@
 //
 
 import UIKit
-// okergoer
-class ViewController: UIViewController {
+
+class CalculatorViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet var numberButtons: [UIButton]!
 
@@ -89,7 +89,7 @@ class ViewController: UIViewController {
             self.present(alertVC, animated: true, completion: nil)
         }
     }
-    
+
     @IBAction func tappedEqualButton(_ sender: UIButton) {
         viewModel.setCalculusElements(elements: elements)
         viewModel.executeCalculus()
@@ -97,7 +97,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: CalculatorViewModelDelegate {
+extension CalculatorViewController: CalculatorViewModelDelegate {
     func calculusFailed(errorMessage: String) {
         let alertVC = UIAlertController(title: "Zéro!", message: "Entrez une expression correcte !", preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
