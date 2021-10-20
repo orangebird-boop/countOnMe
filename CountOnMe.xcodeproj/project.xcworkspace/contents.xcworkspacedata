@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:../CountOnMeUITests">
+      location = "self:/Users/noralillamatyassi/Documents/openclassroom/countOnMe/CountOnMe.xcodeproj">
    </FileRef>
 </Workspace>
