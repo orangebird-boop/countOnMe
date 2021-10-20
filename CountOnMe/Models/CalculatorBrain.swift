@@ -52,7 +52,7 @@ class CalculatorBrain {
                     return .failure(.invalidExpression)
                 }
                 // it is not possible to divide by zero
-                guard element == "÷" && rightOperand != 0 else {
+                guard element != "÷" || (element == "÷" && rightOperand != 0) else {
                     return .failure(.divideByZero)
                 }
 

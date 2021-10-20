@@ -52,8 +52,8 @@ class SimpleCalcTests: XCTestCase {
         switch result {
         case .success(let sum):
             XCTAssertEqual(sum, "4.0")
-        case .failure(let error):
-            XCTAssertEqual(error, .divideByZero)
+        case .failure(_):
+            XCTFail("This calcul shouldn't fail")
         }
     }
 
@@ -63,8 +63,8 @@ class SimpleCalcTests: XCTestCase {
         switch result {
         case .success(let sum):
             XCTAssertEqual(sum, "3.0")
-        case .failure(let error):
-            XCTAssertEqual(error, .invalidExpression)
+        case .failure(_):
+            XCTFail("This calcul shouldn't fail")
         }
     }
 
@@ -73,9 +73,9 @@ class SimpleCalcTests: XCTestCase {
         let result = calculatorBrain.executeCalculus()
         switch result {
         case .success(let sum):
-            XCTAssertEqual(sum, "19.0")
-        case .failure(let error):
-            XCTAssertEqual(error, .divideByZero)
+            XCTAssertEqual(sum, "13.0")
+        case .failure(_):
+            XCTFail("This calcul shouldn't fail")
         }
     }
 
@@ -144,18 +144,4 @@ class SimpleCalcTests: XCTestCase {
             XCTAssertEqual(error, .divideByZero)
         }
     }
-
-// Does this function need to be tested?
-    /*
-    func testShouldReturnFatalErrorWhileMultiplicationOrDivisionWhenOperatorIsUnknown() {
-        calculatorBrain.elements = ["8", "a", "0"]
-        let result = calculatorBrain.executeCalculus()
-        switch result {
-        case .success(_):
-            XCTFail("should return 13.5")
-        case .failure(let error):
-            break
-        }
-    }
- */
 }
